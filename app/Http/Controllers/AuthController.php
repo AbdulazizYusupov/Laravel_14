@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendEmail;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ class AuthController extends Controller
     {
         return view('Auth.login');
     }
+
     public function login(Request $request)
     {
         $data = $request->validate([
@@ -22,24 +24,42 @@ class AuthController extends Controller
         ]);
         if (auth()->attempt($data)) {
             return redirect(route('category.index'));
-        }else{
+        } else {
             return redirect(route('loginPage'));
         }
     }
-    public function forget ()
+
+    public function forget()
     {
         return view('Auth.forget');
     }
+
+    public function forgetPassword(Request $request)
+    {
+        $user = User::where('email', $request->email)->firstOrFail();
+
+        $rand = rand(100000, 999999);
+
+        SendEmail::dispatch($user->email, $rand);
+
+        $user->update([
+            'password' => Hash::make($rand),
+        ]);
+        return redirect(route('loginPage'));
+    }
+
     public function logout()
     {
         auth()->logout();
         return redirect(route('loginPage'));
     }
+
     public function index()
     {
         $models = User::orderBy('id', 'asc')->paginate(10);
-        return view('Auth.index',['models' => $models]);
+        return view('Auth.index', ['models' => $models]);
     }
+
     public function store(Request $request)
     {
         $data = $request->validate([

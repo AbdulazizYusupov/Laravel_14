@@ -13,6 +13,7 @@ Route::get('/login',[AuthController::class,'loginPage'])->name('loginPage');
 Route::post('/login',[AuthController::class,'login'])->name('login');
 
 Route::get('/forget',[AuthController::class, 'forget'])->name('forget');
+Route::post('/forget',[AuthController::class, 'forgetPassword'])->name('forgetPassword');
 
 Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 
