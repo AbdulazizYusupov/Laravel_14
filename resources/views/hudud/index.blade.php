@@ -27,7 +27,8 @@
                 <div class="row mb-2">
                     <div class="col-sm-6 mt-2">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#create">Create</button>
+                                data-bs-target="#create">Create
+                        </button>
 
                         <div class="modal fade" id="create" tabindex="-1"
                              aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -45,7 +46,13 @@
                                           method="POST">
                                         @csrf
                                         <div class="modal-body">
-                                            <input class="form-control" type="text" name="name"><br>
+                                            <input type="text" name="name" class="form-control"><br>
+                                            <select class="form-select" aria-label="Default select example"
+                                                    name="user_id">
+                                                @foreach($users as $user)
+                                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
@@ -110,6 +117,14 @@
                                                         <div class="modal-body">
                                                             <input class="form-control" type="text" name="name"
                                                                    value="{{ $model->name }}"><br>
+                                                            <select class="form-select"
+                                                                    aria-label="Default select example"
+                                                                    name="user_id">
+                                                                @foreach($users as $user)
+                                                                    <option
+                                                                        value="{{$user->id}}">{{$user->name}}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"

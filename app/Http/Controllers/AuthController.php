@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -31,5 +33,45 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
+        return redirect(route('loginPage'));
+    }
+    public function index()
+    {
+        $models = User::orderBy('id', 'asc')->paginate(10);
+        return view('Auth.index',['models' => $models]);
+    }
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'role' => 'required',
+            'password' => 'required|min:6',
+        ]);
+
+        User::create($data);
+
+        return redirect()->route('user.index');
+    }
+
+    public function update(Request $request, User $user, int $id)
+    {
+        $data = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'role' => 'required',
+            'password' => 'required|min:6',
+        ]);
+
+        $user->where('id', $id)->update($data);
+
+        return redirect()->route('user.index');
+    }
+
+    public function delete(Request $request, User $user)
+    {
+        $destroy = $user->findOrFail($request->id);
+        $destroy->delete();
+        return redirect()->route('user.index');
     }
 }

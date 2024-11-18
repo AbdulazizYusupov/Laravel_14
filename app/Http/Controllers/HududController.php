@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Hudud;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HududController extends Controller
 {
     public function index()
     {
+        $users = User::all();
         $models = Hudud::orderBy('id', 'asc')->paginate(10);
-        return view('hudud.index', ["models" => $models]);
+        return view('hudud.index', ["models" => $models,'users' => $users]);
     }
 
     public function store(Request $request)
@@ -32,6 +34,7 @@ class HududController extends Controller
             'name' => 'required|max:255',
             'user_id' => 'required',
         ]);
+
         $hudud->where('id', $id)->update($data);
 
         return redirect()->route('hudud.index');
