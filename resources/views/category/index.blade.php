@@ -45,7 +45,7 @@
                                           method="POST">
                                         @csrf
                                         <div class="modal-body">
-                                            <input class="form-control" type="text" name="name"><br>
+                                            <input class="form-control" type="text" name="name" placeholder="Name"><br>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
@@ -70,7 +70,6 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Status</th>
                                 <th>Update</th>
                                 <th>Delete</th>
                             </tr>
@@ -80,20 +79,6 @@
                                 <tr>
                                     <th>{{ $model->id }}</th>
                                     <td>{{ $model->name }}</td>
-                                    <td>
-                                        <form action="{{ route('category.active', $model->id) }}" method="get">
-                                            @csrf
-                                            @method('POST')
-                                            @if ($model->status == 1)
-                                                <input type="hidden" name="active" value="0">
-                                                <button type="submit" class="btn btn-success">True</button>
-                                            @endif
-                                            @if ($model->status == 0)
-                                                <input type="hidden" name="active" value="1">
-                                                <button type="submit" class="btn btn-danger">False</button>
-                                            @endif
-                                        </form>
-                                    </td>
                                     <td>
                                         <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                                 data-bs-target="#edit{{ $model->id }}">

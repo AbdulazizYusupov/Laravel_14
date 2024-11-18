@@ -65,7 +65,6 @@ class AuthController extends Controller
         $data = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
-            'role' => 'required',
             'password' => 'required|min:6',
         ]);
 
@@ -74,17 +73,20 @@ class AuthController extends Controller
         return redirect()->route('user.index');
     }
 
-    public function update(Request $request, User $user, int $id)
+    public function update(Request $request, User $user)
     {
+
+        //dd($user);
         $data = $request->validate([
             'name' => 'required|max:255',
-            'email' => 'required|email|unique:users',
-            'role' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'required|min:6',
         ]);
-
-        $user->where('id', $id)->update($data);
-
+        //dd($user);
+        $user->name=$request->name;
+        $user->email=$request->email;
+        $user->password=$request->password;
+        $user->save();
         return redirect()->route('user.index');
     }
 

@@ -77,7 +77,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>User_name</th>
+                                <th>User</th>
                                 <th>Update</th>
                                 <th>Delete</th>
                             </tr>
@@ -121,8 +121,14 @@
                                                                     aria-label="Default select example"
                                                                     name="user_id">
                                                                 @foreach($users as $user)
-                                                                    <option
-                                                                        value="{{$user->id}}">{{$user->name}}</option>
+                                                                    @if($model->user->name == $user->name)
+                                                                        <option value="{{$user->id}}"
+                                                                                selected>{{$user->name}}</option>
+                                                                    @endif
+                                                                    @if($model->user->name != $user->name)
+                                                                        <option
+                                                                            value="{{$user->id}}">{{$user->name}}</option>
+                                                                    @endif
                                                                 @endforeach
                                                             </select>
                                                         </div>

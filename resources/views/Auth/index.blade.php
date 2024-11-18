@@ -49,7 +49,6 @@
                                             <input class="form-control" type="text" name="name" placeholder="Name"><br>
                                             <input class="form-control" type="email" name="email" placeholder="Email"><br>
                                             <input class="form-control" type="password" name="password" placeholder="Password"><br>
-                                            <input class="form-control" type="text" name="role" placeholder="Role"><br>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
@@ -122,8 +121,6 @@
                                                                        name="email" value="{{ $model->email }}"><br>
                                                                 <input class="form-control" type="password"
                                                                        name="password" value="{{ $model->password }}"><br>
-                                                                <input class="form-control" type="text"
-                                                                       name="role" value="{{ $model->role }}"><br></br>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
