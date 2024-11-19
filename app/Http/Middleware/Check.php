@@ -21,6 +21,6 @@ class Check
             }
             abort(403);
         }
-        abort(404);
+        return redirect()->route('loginPage');
     }
 }

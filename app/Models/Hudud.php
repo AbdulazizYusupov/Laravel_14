@@ -16,4 +16,8 @@ class Hudud extends Model
     {
         return $this->hasMany(TaskRegion::class,'hudud_id','id');
     }
+    public function javob()
+    {
+        return $this->hasMany(Javob::class,'hudud_id','id');
+    }
 }

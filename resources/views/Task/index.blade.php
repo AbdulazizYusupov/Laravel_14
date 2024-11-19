@@ -26,9 +26,23 @@
                 </div>
                 <div class="row mb-2">
                     <div class="col-sm-6 mt-2">
-                        @if(auth()->user()->role == 'admin')
-                            <a href="{{route('task.create')}}" class="btn btn-primary">Create</a>
-                        @endif
+                        <a href="{{route('task.create')}}" class="btn btn-primary">Create</a>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-6 mt-2">
+                        <form action="{{ route('task.filter') }}" method="POST" class="form-inline">
+                            @csrf
+                            <div class="form-group mr-2">
+                                <label for="start_date">Start Date:</label>
+                                <input type="date" id="start_date" name="start_date" class="form-control ml-2">
+                            </div>
+                            <div class="form-group mr-2">
+                                <label for="end_date">End Date:</label>
+                                <input type="date" id="end_date" name="end_date" class="form-control ml-2">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -43,15 +57,13 @@
                                 <th style="border: 1px solid #ccc;">ID</th>
                                 <th style="border: 1px solid #ccc;">Hudud</th>
                                 <th style="border: 1px solid #ccc;">Name</th>
-                                <th style="border: 1px solid #ccc;">TItle</th>
+                                <th style="border: 1px solid #ccc;">Title</th>
                                 <th style="border: 1px solid #ccc;">File</th>
                                 <th style="border: 1px solid #ccc;">Category</th>
                                 <th style="border: 1px solid #ccc;">Muddati</th>
                                 <th style="border: 1px solid #ccc;">Status</th>
-                                @if(auth()->user()->role == 'admin')
-                                    <th style="border: 1px solid #ccc;">Update</th>
-                                    <th style="border: 1px solid #ccc;">Delete</th>
-                                @endif
+                                <th style="border: 1px solid #ccc;">Update</th>
+                                <th style="border: 1px solid #ccc;">Delete</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -64,7 +76,8 @@
                                     <td style="border: 1px solid #ccc;">
                                         @if($model->task->file)
                                             <a href="{{ asset('files/' . $model->task->file) }}"
-                                               download="{{ $model->task->file }}" class="btn btn-success btn-sm">
+                                               download="{{ $model->task->file }}" class="btn btn-sm"
+                                               style="background-color: #00d1d7; color: white; border: none; padding: 5px 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; border-radius: 4px;">
                                                 <i class="fas fa-download"></i> Yuklab olish
                                             </a>
                                         @else
@@ -73,76 +86,126 @@
                                     </td>
                                     <td style="border: 1px solid #ccc;">{{$model->task->category->name}}</td>
                                     <td style="border: 1px solid #ccc;">{{$model->task->data}}</td>
-                                    @if(auth()->user()->role == 'admin')
-                                        <td style="border: 1px solid #ddd; padding: 8px;">
-                                            @if($model->status == 1 )
-
-                                                <a href="#"
-                                                   style="text-decoration: none; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 80px; height: 50px; border: 2px solid #ff0000; border-radius: 4px; color: #ff0000; cursor: not-allowed;pointer-events: none;"
-                                                   target="_blank">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                         fill="none"
-                                                         stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                                        <path d="M5 13l4 4L19 7"/>
-                                                    </svg>
-                                                    <span style="font-size: 12px; margin-top: 5px;">topshirildi</span>
-                                                </a>
-                                            @endif
-                                            @if($model->status == 2)
-                                                <a href="#"
-                                                   style="text-decoration: none; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 80px; height: 50px; border: 2px solid #007bff; border-radius: 4px; color: #007bff; pointer-events: none;">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-check2-all"
-                                                         viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
-                                                        <path
-                                                            d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
-                                                    </svg>
-                                                    <span style="font-size: 12px; margin-top: 5px;">
-
+                                    <td style="border: 1px solid #ddd; padding: 8px;">
+                                        @if($model->status == 1 )
+                                            <a href="#"
+                                               style="text-decoration: none; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 80px; height: 50px; border: 2px solid #ff0000; border-radius: 4px; color: #ff0000; cursor: not-allowed;pointer-events: none;"
+                                               target="_blank">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                     fill="none"
+                                                     stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                    <path d="M5 13l4 4L19 7"/>
+                                                </svg>
+                                                <span
+                                                    style="font-size: 12px; margin-top: 5px;">topshirildi</span>
+                                            </a>
+                                        @endif
+                                        @if($model->status == 2)
+                                            <a href="#"
+                                               style="text-decoration: none; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 80px; height: 50px; border: 2px solid #007bff; border-radius: 4px; color: #007bff; pointer-events: none;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor" class="bi bi-check2-all"
+                                                     viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+                                                    <path
+                                                        d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+                                                </svg>
+                                                <span style="font-size: 12px; margin-top: 5px;">
                                                 ochilgan
                                             </span>
-                                                </a>
-                                            @endif
-                                        </td>
-                                        <td style="border: 1px solid #ccc;"><a href="{{route('task.edit',$model->id)}}"
-                                                                               class="btn btn-warning">
+                                            </a>
+                                        @endif
+                                        @if($model->status == 3)
+                                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                                                    data-bs-target="#{{ $model->id }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                     fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                     fill="currentColor" class="bi bi-telegram" viewBox="0 0 16 16">
                                                     <path
-                                                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.287 5.906q-1.168.486-4.666 2.01-.567.225-.595.442c-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294q.39.01.868-.32 3.269-2.206 3.374-2.23c.05-.012.12-.026.166.016s.042.12.037.141c-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8 8 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629q.14.092.27.187c.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.4 1.4 0 0 0-.013-.315.34.34 0 0 0-.114-.217.53.53 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09"/>
                                                 </svg>
-                                            </a></td>
-                                        <td style="border: 1px solid #ccc;">
-                                            <form action="{{route('task.delete', $model->id)}}" method="get">
-                                                @csrf
-                                                <button class="btn btn-danger">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-                                                    </svg>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    @endif
-                                    @if(auth()->user()->role == 'user')
-                                        <td>
-                                            <form action="{{ route('task.status') }}" method="POST">
-                                                @csrf
-                                                @method('POST')
-                                                @if ($model->status == 1)
-                                                    <input type="hidden" name="id" value="{{ $model->id }}">
-                                                    <input type="hidden" name="active" value="2">
-                                                    <button type="submit" class="btn btn-outline-success">Accept</button>
-                                                @endif
-                                                @if ($model->status == 2)
-                                                    <button type="button" class="btn btn-info">Accepted</button>
-                                                @endif
-                                            </form>
-                                        </td>
-                                    @endif
+                                            </button>
+
+                                            <div class="modal fade" id="{{ $model->id }}" tabindex="-1"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                                Check
+                                                            </h1>
+                                                            <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal"
+                                                                    aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <label
+                                                                class="float-left">Title: {{ $model->task->javob->first()->title }}</label><br><br>
+                                                            <label class="float-left">File: </label>
+                                                            @if( $model->task->javob->first()->file)
+                                                                <a class="float-left mt-1"
+                                                                   href="{{ asset('files/' . $model->task->javob->first()->file) }}"
+                                                                   download="{{ $model->task->javob->first()->file }}"
+                                                                   class="btn btn-sm"
+                                                                   style="background-color: #00d1d7; color: white; border: none; padding: 5px 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; border-radius: 4px;">
+                                                                    <i class="fas fa-download"></i> Yuklab olish
+                                                                </a>
+                                                            @else
+                                                                <span
+                                                                    class="text-muted float-left">  Fayl mavjud emas</span>
+                                                            @endif
+                                                            <br><br>
+                                                            <form
+                                                                action="{{ route('izoh', $model->task->javob->first()->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                <input type="hidden" name="task_id"
+                                                                       value="{{ $model->id }}">
+                                                                <input class="form-control" type="text" name="izoh"
+                                                                       placeholder="Izoh"><br>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Close
+                                                                    </button>
+                                                                    <button type="submit" name="action" value="reject"
+                                                                            class="btn btn-outline-danger">Reject
+                                                                    </button>
+                                                                    <button type="submit" name="action" value="confirm"
+                                                                            class="btn btn-outline-primary">Confirm
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if ($model->status == 4)
+                                            <button type="button" class="btn btn-success">Tasdiqlandi</button>
+                                        @endif
+                                    </td>
+                                    <td style="border: 1px solid #ccc;"><a
+                                            href="{{route('task.edit',$model->id)}}"
+                                            class="btn btn-warning">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                            </svg>
+                                        </a></td>
+                                    <td style="border: 1px solid #ccc;">
+                                        <form action="{{route('task.delete', $model->id)}}" method="get">
+                                            @csrf
+                                            <button class="btn btn-danger">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor" class="bi bi-trash3"
+                                                     viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

@@ -16,4 +16,8 @@ class Task extends Model
     {
         return $this->hasMany(TaskRegion::class, 'task_id','id');
     }
+    public function javob()
+    {
+        return $this->hasMany(Javob::class, 'task_id','id');
+    }
 }

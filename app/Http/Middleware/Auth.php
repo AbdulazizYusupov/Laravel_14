@@ -16,7 +16,10 @@ class Auth
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->check()) {
-            return $next($request);
+            if (auth()->user()->role == 'user') {
+                return $next($request);
+            }
         }
+        return redirect()->route('loginPage');
     }
 }

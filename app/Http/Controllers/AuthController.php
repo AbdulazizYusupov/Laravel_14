@@ -23,7 +23,11 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'min:6'],
         ]);
         if (auth()->attempt($data)) {
-            return redirect(route('task.index'));
+            if (auth()->user()->role == 'admin') {
+                return redirect(route('task.index'));
+            }else{
+                return redirect(route('index'));
+            }
         } else {
             return redirect(route('loginPage'));
         }
@@ -83,9 +87,9 @@ class AuthController extends Controller
             'password' => 'required|min:6',
         ]);
         //dd($user);
-        $user->name=$request->name;
-        $user->email=$request->email;
-        $user->password=$request->password;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
         $user->save();
         return redirect()->route('user.index');
     }
