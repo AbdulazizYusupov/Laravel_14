@@ -23,7 +23,7 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'min:6'],
         ]);
         if (auth()->attempt($data)) {
-            return redirect(route('category.index'));
+            return redirect(route('task.index'));
         } else {
             return redirect(route('loginPage'));
         }

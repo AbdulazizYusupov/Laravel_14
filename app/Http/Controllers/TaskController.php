@@ -113,9 +113,6 @@ class TaskController extends Controller
             ]);
         }
         return redirect()->route('task.index');
-
-
-        return redirect()->route('task.index');
     }
 
     /**
@@ -125,5 +122,13 @@ class TaskController extends Controller
     {
         $task->findOrFail($request->id)->task()->delete();
         return redirect()->route('task.index');
+    }
+
+    public function status(Request $request, TaskRegion $task)
+    {
+        $task
+            ->where('id', $request->id)
+            ->update(['status' => $request->active]);
+        return redirect(route('task.index'))->with('update', 'Updated');
     }
 }
