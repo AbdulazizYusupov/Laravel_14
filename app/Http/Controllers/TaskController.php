@@ -13,8 +13,66 @@ class TaskController extends Controller
 {
     public function index()
     {
+        $count = TaskRegion::all()->count();
         $models = TaskRegion::orderBy('id', 'desc')->paginate(10);
-        return view('Task.index', ['models' => $models]);
+        $twodays = TaskRegion::whereHas('task', function ($query) {
+            $query->whereDate('data', now()->addDays(2));
+        })->count();
+        $tomorrow = TaskRegion::whereHas('task', function ($query) {
+            $query->whereDate('data', now()->addDays(1));
+        })->count();
+        $today = TaskRegion::whereHas('task', function ($query) {
+            $query->whereDate('data', now()->addDays(0));
+        })->count();
+        $confirm = TaskRegion::whereHas('task', function ($query) {
+            $query->where('status', 4);
+        })->count();
+        $reject = TaskRegion::whereHas('task', function ($query) {
+            $query->where('status', 0);
+        })->count();
+        return view('Task.index', ['models' => $models, 'count' => $count,'twodays' => $twodays,'today' => $today, 'tomorrow' => $tomorrow,'confirm' => $confirm,'reject' => $reject]);
+    }
+    public function data(int $key)
+    {
+        $count = TaskRegion::all()->count();
+        $twodays = TaskRegion::whereHas('task', function ($query) {
+            $query->whereDate('data', now()->addDays(2));
+        })->count();
+        $tomorrow = TaskRegion::whereHas('task', function ($query) {
+            $query->whereDate('data', now()->addDays(1));
+        })->count();
+        $today = TaskRegion::whereHas('task', function ($query) {
+            $query->whereDate('data', now()->addDays(0));
+        })->count();
+        $confirm = TaskRegion::whereHas('task', function ($query) {
+            $query->where('status', 4);
+        })->count();
+        $reject = TaskRegion::whereHas('task', function ($query) {
+            $query->where('status', 0);
+        })->count();
+        if ($key == 1) {
+            $models = TaskRegion::whereHas('task', function ($query) {
+                $query->whereDate('data', now()->addDays(2));
+            })->orderBy('id', 'desc')->paginate(10);
+        }elseif ($key == 2){
+            $models = TaskRegion::whereHas('task', function ($query) {
+                $query->whereDate('data', now()->addDays(1));
+            })->orderBy('id', 'desc')->paginate(10);
+        }elseif ($key == 3){
+            $models = TaskRegion::whereHas('task', function ($query) {
+                $query->whereDate('data', now()->addDays(0));
+            })->orderBy('id', 'desc')->paginate(10);
+        }elseif ($key == 4){
+            $models = TaskRegion::whereHas('task', function ($query) {
+                $query->where('status' , 4);
+            })->orderBy('id', 'desc')->paginate(10);
+        }elseif ($key == 5){
+            $models = TaskRegion::whereHas('task', function ($query) {
+                $query->where('status' , 0);
+            })->orderBy('id', 'desc')->paginate(10);
+        }
+        return view('Task.index', ['models' => $models,'count' => $count,'twodays' => $twodays,'today' => $today, 'tomorrow' => $tomorrow,'confirm' => $confirm,'reject' => $reject]);
+
     }
     public function create()
     {
@@ -113,8 +171,23 @@ class TaskController extends Controller
         })
             ->orderBy('id', 'desc')
             ->paginate(10);
-
-        return view('Task.index', ['models' => $models]);
+        $count = TaskRegion::all()->count();
+        $twodays = TaskRegion::whereHas('task', function ($query) {
+            $query->whereDate('data', now()->addDays(2));
+        })->count();
+        $tomorrow = TaskRegion::whereHas('task', function ($query) {
+            $query->whereDate('data', now()->addDays(1));
+        })->count();
+        $today = TaskRegion::whereHas('task', function ($query) {
+            $query->whereDate('data', now()->addDays(0));
+        })->count();
+        $confirm = TaskRegion::whereHas('task', function ($query) {
+            $query->where('status', 4);
+        })->count();
+        $reject = TaskRegion::whereHas('task', function ($query) {
+            $query->where('status', 0);
+        })->count();
+        return view('Task.index', ['models' => $models, 'count' => $count, 'twodays' => $twodays, 'today' => $today, 'tomorrow' => $tomorrow, 'confirm' => $confirm, 'reject' => $reject]);
     }
 
 }

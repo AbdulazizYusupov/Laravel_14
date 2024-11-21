@@ -14,10 +14,28 @@ class UserController extends Controller
     {
         $user = auth()->user();
         $id = $user->hudud->id;
+
+        $count = TaskRegion::where('hudud_id', $id)->count();
+
+        $twodays = TaskRegion::where('hudud_id', $id)
+            ->whereHas('task', function ($query) {
+                $query->whereDate('data', now()->addDays(2));
+            })->count();
+
+        $tomorrow = TaskRegion::where('hudud_id', $id)
+            ->whereHas('task', function ($query) {
+                $query->whereDate('data', now()->addDays(1));
+            })->count();
+
+        $today = TaskRegion::where('hudud_id', $id)
+            ->whereHas('task', function ($query) {
+                $query->whereDate('data', now()->addDays(0));
+            })->count();
+
         $models = TaskRegion::orderBy('id', 'desc')
             ->where('hudud_id', $id)
             ->paginate(10);
-        return view('user.index', compact('models'));
+        return view('user.index', ['models' => $models, 'count' => $count, 'twodays' => $twodays, 'tomorrow' => $tomorrow, 'today' => $today]);
     }
 
     public function send(Request $request, $id)
@@ -73,7 +91,7 @@ class UserController extends Controller
         $task = TaskRegion::findOrFail($request->task_id);
         if ($request->action == 'reject') {
             $task->update([
-                'status' => '1',
+                'status' => '0',
             ]);
         } else {
             $task->update([
@@ -86,6 +104,16 @@ class UserController extends Controller
 
     public function filter(Request $request)
     {
+        $count = TaskRegion::all()->count();
+        $twodays = TaskRegion::whereHas('task', function ($query) {
+            $query->whereDate('data', now()->addDays(2));
+        })->count();
+        $tomorrow = TaskRegion::whereHas('task', function ($query) {
+            $query->whereDate('data', now()->addDays(1));
+        })->count();
+        $today = TaskRegion::whereHas('task', function ($query) {
+            $query->whereDate('data', now()->addDays(0));
+        })->count();
         $user = auth()->user();
         $id = $user->hudud->id;
 
@@ -99,7 +127,7 @@ class UserController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('user.index', ['models' => $models]);
+        return view('user.index', ['models' => $models, 'count' => $count, 'twodays' => $twodays, 'tomorrow' => $tomorrow, 'today' => $today]);
     }
 
 }

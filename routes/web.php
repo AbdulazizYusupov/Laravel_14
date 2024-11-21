@@ -21,6 +21,13 @@ Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 Route::post('/task-status',[TaskController::class,'status'])->name('task.status');
 
 Route::middleware('auth')->group(function(){
+    Route::get('/profile',[AuthController::class,'profile'])->name('profile');
+    Route::put('/profile-update{user}',[AuthController::class,'updateProfile'])->name('profile.update');
+
+    Route::get('/task-data{key}',[TaskController::class,'data'])->name('task.data');
+    Route::get('/task-confirm',[TaskController::class,'confirm'])->name('task.confirm');
+    Route::get('task-reject',[TaskController::class,'reject'])->name('task.reject');
+
     Route::get('/index',[\App\Http\Controllers\UserController::class,'index'])->name('index');
     Route::put('/send{id}',[\App\Http\Controllers\UserController::class,'send'])->name('send');
     Route::post('/filter',[\App\Http\Controllers\UserController::class,'filter'])->name('filter');

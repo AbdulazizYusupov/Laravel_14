@@ -64,14 +64,13 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12">
-                        <table class="table table-striped">
+                    <div class="col-md-12">
+                        <table class="table table-striped table-bordered text-center">
                             <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Update</th>
-                                <th>Delete</th>
+                                <th>Options</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -119,9 +118,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <form action="{{route('category.delete', $model->id)}}" method="get">
+                                        <form action="{{route('category.delete', $model->id)}}" method="get"
+                                              class="d-inline-block">
                                             @csrf
                                             <button class="btn btn-danger">
                                                 <svg xmlns="http://www.w3.org/2000/svg"

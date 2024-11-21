@@ -68,28 +68,27 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <table class="table table-striped">
-                            <thead>
+                        <table class="table table-striped border text-center">
+                            <thead style="border: 1px solid black;">
                             <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Update</th>
-                                <th>Delete</th>
+                                <th style="border: 1px solid black;">ID</th>
+                                <th style="border: 1px solid black;">Name</th>
+                                <th style="border: 1px solid black;">Email</th>
+                                <th style="border: 1px solid black;">Role</th>
+                                <th style="border: 1px solid black;">Options</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($models as $model)
                                 @if($model->role != 'admin')
-                                    <tr>
-                                        <th>{{ $model->id }}</th>
-                                        <td>{{ $model->name }}</td>
-                                        <td>{{ $model->email }}</td>
-                                        <td>{{$model->role}}</td>
-                                        <td>
+                                    <tr style="border: 1px solid black;">
+                                        <th style="border: 1px solid black;">{{ $model->id }}</th>
+                                        <td style="border: 1px solid black;">{{ $model->name }}</td>
+                                        <td style="border: 1px solid black;">{{ $model->email }}</td>
+                                        <td style="border: 1px solid black;">{{ $model->role }}</td>
+                                        <td style="border: 1px solid black;">
                                             <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                                    data-bs-target="#edit{{ $model->id }}">
+                                                    data-bs-target="#edit{{ $model->id }}" style="margin-right: 5px;">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                      fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                                     <path
@@ -103,12 +102,10 @@
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                                Update
-                                                                user
+                                                                Update user
                                                             </h1>
                                                             <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal"
-                                                                    aria-label="Close"></button>
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <form action="{{ route('user.update', $model->id) }}"
                                                               method="POST">
@@ -120,7 +117,8 @@
                                                                 <input class="form-control" type="email"
                                                                        name="email" value="{{ $model->email }}"><br>
                                                                 <input class="form-control" type="password"
-                                                                       name="password" value="{{ $model->password }}"><br>
+                                                                       name="password"
+                                                                       value="{{ $model->password }}"><br>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
@@ -133,9 +131,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <form action="{{route('user.delete', $model->id)}}" method="get">
+
+                                            <form action="{{route('user.delete', $model->id)}}" method="get"
+                                                  style="display: inline;">
                                                 @csrf
                                                 <button class="btn btn-danger">
                                                     <svg xmlns="http://www.w3.org/2000/svg"

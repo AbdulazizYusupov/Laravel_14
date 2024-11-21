@@ -24,24 +24,109 @@
                         <h1 class="m-0">Task</h1>
                     </div>
                 </div>
-                <div class="row mb-2">
-                    <div class="col-sm-6 mt-2">
-                        <a href="{{route('task.create')}}" class="btn btn-primary">Create</a>
+                <div class="row">
+                    <div class="col-lg-2 col-6">
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>{{$count}}</h3>
+                                <p>All tasks</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="{{route('task.index')}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-6">
+                        <div class="small-box bg-secondary">
+                            <div class="inner">
+                                <h3>{{$twodays}}</h3>
+                                <p>2 kun qolganlar</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-stats-bars"></i>
+                            </div>
+                            <a href="{{route('task.data', 1)}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-6">
+                        <div class="small-box bg-primary">
+                            <div class="inner">
+                                <h3>{{$tomorrow}}</h3>
+                                <p>Ertaga</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-stats-bars"></i>
+                            </div>
+                            <a href="{{route('task.data',2)}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-6">
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3>{{$today}}</h3>
+                                <p>Bugun</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-stats-bars"></i>
+                            </div>
+                            <a href="{{route('task.data', 3)}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-6">
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3>{{$confirm}}</h3>
+                                <p>Tasdiqlanganlar</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a href="{{route('task.data', 4)}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-6">
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3>{{$reject}}</h3>
+                                <p>Qaytarilganlar</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a href="{{route('task.data', 5)}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-sm-6 mt-2">
+                        <a href="{{route('task.create')}}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-10 mt-2">
                         <form action="{{ route('task.filter') }}" method="POST" class="form-inline">
                             @csrf
-                            <div class="form-group mr-2">
+                            <div class="form-group mr-4">
                                 <label for="start_date">Start Date:</label>
-                                <input type="date" id="start_date" name="start_date" class="form-control ml-2">
+                                <input type="date" id="start_date" name="start_date"
+                                       class="form-control date-input ml-2">
                             </div>
-                            <div class="form-group mr-2">
+                            <div class="form-group mr-4">
                                 <label for="end_date">End Date:</label>
-                                <input type="date" id="end_date" name="end_date" class="form-control ml-2">
+                                <input type="date" id="end_date" name="end_date"
+                                       class="form-control date-input ml-2">
                             </div>
-                            <button type="submit" class="btn btn-primary">Filter</button>
+                            <button type="submit" class="btn" style="background-color: #343a40; color: white;">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -81,15 +166,32 @@
                                                 <i class="fas fa-download"></i> Yuklab olish
                                             </a>
                                         @else
-                                            <span class="text-muted">Fayl mavjud emas</span>
+                                            <button class="btn btn-sm"
+                                                    style="background-color: #6c757d; color: white; border: none; padding: 5px 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; border-radius: 4px;"
+                                                    disabled>
+                                                Fayl mavjud emas
+                                            </button>
                                         @endif
                                     </td>
                                     <td style="border: 1px solid #ccc;">{{$model->task->category->name}}</td>
                                     <td style="border: 1px solid #ccc;">{{$model->task->data}}</td>
                                     <td style="border: 1px solid #ddd; padding: 8px;">
-                                        @if($model->status == 1 )
+                                        @if($model->status == 0)
                                             <a href="#"
                                                style="text-decoration: none; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 80px; height: 50px; border: 2px solid #ff0000; border-radius: 4px; color: #ff0000; cursor: not-allowed;pointer-events: none;"
+                                               target="_blank">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                     fill="none"
+                                                     stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                    <path d="M5 13l4 4L19 7"/>
+                                                </svg>
+                                                <span
+                                                    style="font-size: 12px; margin-top: 5px;">Qaytarildi</span>
+                                            </a>
+                                        @endif
+                                        @if($model->status == 1 )
+                                            <a href="#"
+                                               style="text-decoration: none; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 80px; height: 50px; border: 2px solid #ffd700; border-radius: 4px; color: #ffd700; cursor: not-allowed;pointer-events: none;"
                                                target="_blank">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="none"
@@ -117,8 +219,10 @@
                                             </a>
                                         @endif
                                         @if($model->status == 3)
-                                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
-                                                    data-bs-target="#{{ $model->id }}">
+                                            <button type="button" class="btn btn-outline-success"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#{{ $model->id }}"
+                                                    style="border: 2px solid #28a745; color: #28a745; background-color: white; padding: 10px 20px; border-radius: 8px; transition: all 0.3s ease;">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                      fill="currentColor" class="bi bi-telegram" viewBox="0 0 16 16">
                                                     <path
@@ -126,6 +230,7 @@
                                                 </svg>
                                             </button>
 
+                                            <!-- Modal -->
                                             <div class="modal fade" id="{{ $model->id }}" tabindex="-1"
                                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
@@ -135,26 +240,23 @@
                                                                 Check
                                                             </h1>
                                                             <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal"
-                                                                    aria-label="Close"></button>
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <label
                                                                 class="float-left">Title: {{ $model->task->javob->first()->title }}</label><br><br>
                                                             <label class="float-left">File: </label>
-                                                            @if( $model->task->javob->first()->file)
+                                                            @if($model->task->javob->first()->file)
                                                                 <a class="float-left mt-1"
                                                                    href="{{ asset('files/' . $model->task->javob->first()->file) }}"
                                                                    download="{{ $model->task->javob->first()->file }}"
                                                                    class="btn btn-sm"
-                                                                   style="background-color: #00d1d7; color: white; border: none; padding: 5px 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; border-radius: 4px;">
-                                                                    <i class="fas fa-download"></i> Yuklab olish
+                                                                   style="background-color: #00d1d7; color: white; border: none; padding: 8px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; border-radius: 4px; transition: all 0.3s ease;">
+                                                                    <i class="fas fa-download"></i> Download
                                                                 </a>
                                                             @else
-                                                                <span
-                                                                    class="text-muted float-left">  Fayl mavjud emas</span>
-                                                            @endif
-                                                            <br><br>
+                                                                <span class="text-muted float-left">No file available</span>
+                                                            @endif<br><br>
                                                             <form
                                                                 action="{{ route('izoh', $model->task->javob->first()->id) }}"
                                                                 method="POST">
@@ -162,16 +264,21 @@
                                                                 <input type="hidden" name="task_id"
                                                                        value="{{ $model->id }}">
                                                                 <input class="form-control" type="text" name="izoh"
-                                                                       placeholder="Izoh"><br>
+                                                                       placeholder="Comment"
+                                                                       style="border-radius: 8px; padding: 10px;"><br>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                             data-bs-dismiss="modal">Close
                                                                     </button>
                                                                     <button type="submit" name="action" value="reject"
-                                                                            class="btn btn-outline-danger">Reject
+                                                                            class="btn btn-outline-danger"
+                                                                            style="border-radius: 8px; padding: 8px 20px;">
+                                                                        Reject
                                                                     </button>
                                                                     <button type="submit" name="action" value="confirm"
-                                                                            class="btn btn-outline-primary">Confirm
+                                                                            class="btn btn-outline-primary"
+                                                                            style="border-radius: 8px; padding: 8px 20px;">
+                                                                        Confirm
                                                                     </button>
                                                                 </div>
                                                             </form>
@@ -181,7 +288,20 @@
                                             </div>
                                         @endif
                                         @if ($model->status == 4)
-                                            <button type="button" class="btn btn-success">Tasdiqlandi</button>
+                                            <a href="#"
+                                               style="text-decoration: none; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 80px; height: 50px; border: 2px solid #28a745; border-radius: 4px; color: #28a745; pointer-events: none;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor" class="bi bi-check2-all"
+                                                     viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+                                                    <path
+                                                        d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+                                                </svg>
+                                                <span style="font-size: 12px; margin-top: 5px;">
+                                                        tasdiqlangan
+                                                    </span>
+                                            </a>
                                         @endif
                                     </td>
                                     <td style="border: 1px solid #ccc;"><a

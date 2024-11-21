@@ -100,4 +100,30 @@ class AuthController extends Controller
         $destroy->delete();
         return redirect()->route('user.index');
     }
+
+    public function profile()
+    {
+        $user = auth()->user();
+        return view('Auth.profile', ['user' => $user]);
+    }
+    public function updateProfile(Request $request, User $user)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:6',
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('profile');
+    }
+
 }
