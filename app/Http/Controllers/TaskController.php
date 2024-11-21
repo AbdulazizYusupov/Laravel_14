@@ -72,7 +72,6 @@ class TaskController extends Controller
             })->orderBy('id', 'desc')->paginate(10);
         }
         return view('Task.index', ['models' => $models,'count' => $count,'twodays' => $twodays,'today' => $today, 'tomorrow' => $tomorrow,'confirm' => $confirm,'reject' => $reject]);
-
     }
     public function create()
     {

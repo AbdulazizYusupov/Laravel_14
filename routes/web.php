@@ -24,10 +24,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/profile',[AuthController::class,'profile'])->name('profile');
     Route::put('/profile-update{user}',[AuthController::class,'updateProfile'])->name('profile.update');
 
-    Route::get('/task-data{key}',[TaskController::class,'data'])->name('task.data');
-    Route::get('/task-confirm',[TaskController::class,'confirm'])->name('task.confirm');
-    Route::get('task-reject',[TaskController::class,'reject'])->name('task.reject');
-
+    Route::get('/data{key}',[\App\Http\Controllers\UserController::class,'data'])->name('data');
     Route::get('/index',[\App\Http\Controllers\UserController::class,'index'])->name('index');
     Route::put('/send{id}',[\App\Http\Controllers\UserController::class,'send'])->name('send');
     Route::post('/filter',[\App\Http\Controllers\UserController::class,'filter'])->name('filter');
@@ -47,6 +44,7 @@ Route::middleware('check')->group(function(){
     Route::put('/task-update/{id}',[TaskController::class,'update'])->name('task.update');
     Route::get('/task-delete/{id}',[TaskController::class,'delete'])->name('task.delete');
     Route::post('/task-filter',[TaskController::class,'filter'])->name('task.filter');
+    Route::get('/task-data{key}',[TaskController::class,'data'])->name('task.data');
 
     Route::get('/hudud-index',[HududController::class,'index'])->name('hudud.index');
     Route::post('/hudud-store',[HududController::class,'store'])->name('hudud.store');

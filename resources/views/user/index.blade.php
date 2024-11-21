@@ -10,7 +10,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-3 col-6">
+                    <div class="col-lg-2 col-6">
                         <div class="small-box bg-info">
                             <div class="inner">
                                 <h3>{{$count}}</h3>
@@ -19,11 +19,11 @@
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
                             </div>
-                            <a href="{{route('task.index')}}" class="small-box-footer">More info <i
+                            <a href="{{route('index')}}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-6">
+                    <div class="col-lg-2 col-6">
                         <div class="small-box bg-secondary">
                             <div class="inner">
                                 <h3>{{$twodays}}</h3>
@@ -32,11 +32,11 @@
                             <div class="icon">
                                 <i class="ion ion-stats-bars"></i>
                             </div>
-                            <a href="{{route('task.data', 1)}}" class="small-box-footer">More info <i
+                            <a href="{{route('data', 1)}}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-6">
+                    <div class="col-lg-2 col-6">
                         <div class="small-box bg-primary">
                             <div class="inner">
                                 <h3>{{$tomorrow}}</h3>
@@ -45,11 +45,11 @@
                             <div class="icon">
                                 <i class="ion ion-stats-bars"></i>
                             </div>
-                            <a href="{{route('task.data',2)}}" class="small-box-footer">More info <i
+                            <a href="{{route('data', 2)}}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-6">
+                    <div class="col-lg-2 col-6">
                         <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3>{{$today}}</h3>
@@ -58,36 +58,36 @@
                             <div class="icon">
                                 <i class="ion ion-stats-bars"></i>
                             </div>
-                            <a href="{{route('task.data', 3)}}" class="small-box-footer">More info <i
+                            <a href="{{route('data', 3)}}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-{{--                    <div class="col-lg-2 col-6">--}}
-{{--                        <div class="small-box bg-success">--}}
-{{--                            <div class="inner">--}}
-{{--                                <h3>{{$confirm}}</h3>--}}
-{{--                                <p>Tasdiqlanganlar</p>--}}
-{{--                            </div>--}}
-{{--                            <div class="icon">--}}
-{{--                                <i class="ion ion-pie-graph"></i>--}}
-{{--                            </div>--}}
-{{--                            <a href="{{route('task.data', 4)}}" class="small-box-footer">More info <i--}}
-{{--                                    class="fas fa-arrow-circle-right"></i></a>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-lg-2 col-6">--}}
-{{--                        <div class="small-box bg-danger">--}}
-{{--                            <div class="inner">--}}
-{{--                                <h3>{{$reject}}</h3>--}}
-{{--                                <p>Qaytarilganlar</p>--}}
-{{--                            </div>--}}
-{{--                            <div class="icon">--}}
-{{--                                <i class="ion ion-pie-graph"></i>--}}
-{{--                            </div>--}}
-{{--                            <a href="{{route('task.data', 5)}}" class="small-box-footer">More info <i--}}
-{{--                                    class="fas fa-arrow-circle-right"></i></a>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    <div class="col-lg-2 col-6">
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3>{{$confirm}}</h3>
+                                <p>Tasdiqlanganlar</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a href="{{route('data', 4)}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-6">
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3>{{$reject}}</h3>
+                                <p>Qaytarilganlar</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a href="{{route('data', 5)}}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-sm-6 mt-2">

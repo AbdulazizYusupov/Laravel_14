@@ -31,11 +31,73 @@ class UserController extends Controller
             ->whereHas('task', function ($query) {
                 $query->whereDate('data', now()->addDays(0));
             })->count();
+        $confirm = TaskRegion::where('hudud_id', $id)
+            ->whereHas('task', function ($query) {
+                $query->where('status', 4);
+            })->count();
+        $reject = TaskRegion::where('hudud_id', $id)
+            ->whereHas('task', function ($query) {
+                $query->where('status', 0);
+            })->count();
 
         $models = TaskRegion::orderBy('id', 'desc')
             ->where('hudud_id', $id)
             ->paginate(10);
-        return view('user.index', ['models' => $models, 'count' => $count, 'twodays' => $twodays, 'tomorrow' => $tomorrow, 'today' => $today]);
+        return view('user.index', ['models' => $models, 'count' => $count, 'twodays' => $twodays, 'tomorrow' => $tomorrow, 'today' => $today, 'confirm' => $confirm, 'reject' => $reject]);
+    }
+
+    public function data(int $key)
+    {
+        $id = auth()->user()->hudud->id;
+        $count = TaskRegion::where('hudud_id', $id)->count();
+        $twodays = TaskRegion::where('hudud_id', $id)
+            ->whereHas('task', function ($query) {
+                $query->whereDate('data', now()->addDays(2));
+            })->count();
+        $tomorrow = TaskRegion::where('hudud_id', $id)
+            ->whereHas('task', function ($query) {
+                $query->whereDate('data', now()->addDays(1));
+            })->count();
+        $today = TaskRegion::where('hudud_id', $id)
+            ->whereHas('task', function ($query) {
+                $query->whereDate('data', now()->addDays(0));
+            })->count();
+        $confirm = TaskRegion::where('hudud_id', $id)
+            ->whereHas('task', function ($query) {
+                $query->where('status', 4);
+            })->count();
+        $reject = TaskRegion::where('hudud_id', $id)
+            ->whereHas('task', function ($query) {
+                $query->where('status', 0);
+            })->count();
+        if ($key == 1) {
+            $models = TaskRegion::where('hudud_id', $id)
+                ->whereHas('task', function ($query) {
+                    $query->whereDate('data', now()->addDays(2));
+                })->orderBy('id', 'desc')->paginate(10);
+        } elseif ($key == 2) {
+            $models = TaskRegion::where('hudud_id', $id)
+                ->whereHas('task', function ($query) {
+                    $query->whereDate('data', now()->addDays(1));
+                })->orderBy('id', 'desc')->paginate(10);
+        } elseif ($key == 3) {
+            $models = TaskRegion::where('hudud_id', $id)
+                ->whereHas('task', function ($query) {
+                $query->whereDate('data', now()->addDays(0));
+            })->orderBy('id', 'desc')->paginate(10);
+        } elseif ($key == 4) {
+            $models = TaskRegion::where('hudud_id', $id)
+                ->whereHas('task', function ($query) {
+                $query->where('status', 4);
+            })->orderBy('id', 'desc')->paginate(10);
+        } elseif ($key == 5) {
+            $models = TaskRegion::where('hudud_id', $id)
+                ->whereHas('task', function ($query) {
+                $query->where('status', 0);
+            })->orderBy('id', 'desc')->paginate(10);
+        }
+        return view('user.index', ['models' => $models, 'count' => $count, 'twodays' => $twodays, 'today' => $today, 'tomorrow' => $tomorrow, 'confirm' => $confirm, 'reject' => $reject]);
+
     }
 
     public function send(Request $request, $id)
