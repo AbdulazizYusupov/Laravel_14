@@ -151,17 +151,17 @@
 
                                             @if($taskCount > 0 and isset($key))
                                                 @if($key == 'expired')
-                                                    <a href="#">
+                                                    <a href="{{ route('manage.show', ['hudud_id' => $hudud->id, 'category_id' => $category->id, 'key' => $key]) }}">
                                                         <span style="display: inline-block; padding: 8px 15px;
-                                                                            border-radius: 5px; background-color: red;
-                                                                            color: white; font-weight: bold; font-size: 14px;
-                                                                            text-align: center; width: 50px; cursor: pointer;">
+                                                                    border-radius: 5px; background-color: red;
+                                                                    color: white; font-weight: bold; font-size: 14px;
+                                                                    text-align: center; width: 50px; cursor: pointer;">
                                                             {{ $taskCount }}
                                                         </span>
                                                     </a>
                                                 @endif
                                                 @if($key == 'approved')
-                                                    <a href="#">
+                                                    <a href="{{ route('manage.show', ['hudud_id' => $hudud->id, 'category_id' => $category->id, 'key' => $key]) }}">
                                                         <span style="display: inline-block; padding: 8px 15px;
                                                                             border-radius: 5px; background-color: green;
                                                                             color: white; font-weight: bold; font-size: 14px;
@@ -171,7 +171,7 @@
                                                     </a>
                                                 @endif
                                                 @if($key == 0)
-                                                    <a href="#">
+                                                    <a href="{{ route('manage.show', ['hudud_id' => $hudud->id, 'category_id' => $category->id, 'key' => $key]) }}">
                                                         <span style="display: inline-block; padding: 8px 15px;
                                                                             border-radius: 5px; background-color: yellow;
                                                                             color: white; font-weight: bold; font-size: 14px;
@@ -181,7 +181,7 @@
                                                     </a>
                                                 @endif
                                                 @if($key == 1)
-                                                    <a href="#">
+                                                    <a href="{{ route('manage.show', ['hudud_id' => $hudud->id, 'category_id' => $category->id, 'key' => $key]) }}">
                                                         <span style="display: inline-block; padding: 8px 15px;
                                                                             border-radius: 5px; background-color: blue;
                                                                             color: white; font-weight: bold; font-size: 14px;
@@ -191,7 +191,7 @@
                                                     </a>
                                                 @endif
                                                 @if($key == 2)
-                                                    <a href="#">
+                                                    <a href="{{ route('manage.show', ['hudud_id' => $hudud->id, 'category_id' => $category->id, 'key' => $key]) }}">
                                                         <span style="display: inline-block; padding: 8px 15px;
                                                                             border-radius: 5px; background-color: grey;
                                                                             color: white; font-weight: bold; font-size: 14px;
@@ -202,7 +202,7 @@
                                                 @endif
                                             @endif
                                             @if(!isset($key) and $taskCount > 0)
-                                                <a href="#">
+                                                <a href="{{ route('manage.show', ['hudud_id' => $hudud->id, 'category_id' => $category->id]) }}">
                                                     <span style="display: inline-block; padding: 8px 15px;
                                                                         border-radius: 5px; background-color: #02c0c9;
                                                                         color: white; font-weight: bold; font-size: 14px;

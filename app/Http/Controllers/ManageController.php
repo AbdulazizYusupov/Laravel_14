@@ -58,4 +58,27 @@ class ManageController extends Controller
         })->count();
         return view('manage.index', ['query' => $query, 'key' => $key, 'hududs' => $hududlar, 'categories' => $categories, 'count' => $count, 'twodays' => $twodays, 'today' => $today, 'tomorrow' => $tomorrow, 'confirm' => $confirm, 'reject' => $reject]);
     }
+    public function show(Request $request)
+    {
+        $hududId = $request->input('hudud_id');
+        $categoryId = $request->input('category_id');
+        $key = $request->input('key');
+
+        $tasks = TaskRegion::where('hudud_id', $hududId)
+            ->where('category_id', $categoryId);
+
+        if ($key == 'expired') {
+            $tasks->whereHas('task', function ($q) {
+                $q->where('data', '<', now());
+            });
+        } elseif ($key == 'approved') {
+            $tasks->whereHas('task', function ($q) {
+                $q->where('status', '=', 4);
+            });
+        }
+
+        $tasks = $tasks->get();
+
+        return view('manage.show', compact('tasks'));
+    }
 }

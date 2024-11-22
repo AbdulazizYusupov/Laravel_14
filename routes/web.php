@@ -35,6 +35,7 @@ Route::middleware('check')->group(function(){
 
     Route::get('/manage-index',[ManageController::class,'index'])->name('manage.index');
     Route::get('/manage-filter/{query}/{key}',[ManageController::class,'filter'])->name('manage.filter');
+    Route::get('/manage-show',[ManageController::class,'show'])->name('manage.show');
 
     Route::get('/category-index',[CategoryController::class,'index'])->name('category.index');
     Route::post('/category-store',[CategoryController::class,'store'])->name('category.store');
