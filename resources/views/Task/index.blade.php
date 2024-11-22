@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-2 col-6">
+                    <div class="col-lg-4 col-6">
                         <div class="small-box bg-info">
                             <div class="inner">
                                 <h3>{{$count}}</h3>
@@ -38,7 +38,7 @@
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-6">
+                    <div class="col-lg-4 col-6">
                         <div class="small-box bg-secondary">
                             <div class="inner">
                                 <h3>{{$twodays}}</h3>
@@ -51,7 +51,7 @@
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-6">
+                    <div class="col-lg-4 col-6">
                         <div class="small-box bg-primary">
                             <div class="inner">
                                 <h3>{{$tomorrow}}</h3>
@@ -64,7 +64,7 @@
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-6">
+                    <div class="col-lg-4 col-6">
                         <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3>{{$today}}</h3>
@@ -77,7 +77,7 @@
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-6">
+                    <div class="col-lg-4 col-6">
                         <div class="small-box bg-success">
                             <div class="inner">
                                 <h3>{{$confirm}}</h3>
@@ -90,7 +90,7 @@
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-6">
+                    <div class="col-lg-4 col-6">
                         <div class="small-box bg-danger">
                             <div class="inner">
                                 <h3>{{$reject}}</h3>

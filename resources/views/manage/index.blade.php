@@ -10,20 +10,20 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-2 col-6">
+                    <div class="col-lg-4 col-6">
                         <div class="small-box bg-info">
                             <div class="inner">
                                 <h3>{{$count}}</h3>
                                 <p>All tasks</p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-bag"></i>
+                                <i class="ion-home"></i>
                             </div>
                             <a href="{{route('manage.index')}}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-6">
+                    <div class="col-lg-4 col-6">
                         <div class="small-box bg-secondary">
                             <div class="inner">
                                 <h3>{{$twodays}}</h3>
@@ -36,7 +36,7 @@
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-6">
+                    <div class="col-lg-4 col-6">
                         <div class="small-box bg-primary">
                             <div class="inner">
                                 <h3>{{$tomorrow}}</h3>
@@ -49,7 +49,7 @@
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-6">
+                    <div class="col-lg-4 col-6">
                         <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3>{{$today}}</h3>
@@ -62,28 +62,28 @@
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-6">
+                    <div class="col-lg-4 col-6">
                         <div class="small-box bg-success">
                             <div class="inner">
                                 <h3>{{$confirm}}</h3>
                                 <p>Tasdiqlanganlar</p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-pie-graph"></i>
+                                <i class="ion-checkmark-circled"></i>
                             </div>
                             <a href="{{route('manage.filter', ['status','approved'])}}" class="small-box-footer">More
                                 info <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-6">
+                    <div class="col-lg-4 col-6">
                         <div class="small-box bg-danger">
                             <div class="inner">
                                 <h3>{{$reject}}</h3>
                                 <p>Muddati buzulganlar</p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-pie-graph"></i>
+                                <i class="ion-close-circled"></i>
                             </div>
                             <a href="{{route('manage.filter', ['data','expired'])}}" class="small-box-footer">More info
                                 <i
@@ -100,16 +100,16 @@
                         <table class="table table-striped text-center" style="border: 1px solid #ccc;">
                             <thead>
                             <tr>
-                                <th style="border: 4px solid #ccc;">Hududlar</th>
+                                <th style="border: 1px solid #ccc;">Hududlar</th>
                                 @foreach($categories as $category)
-                                    <th style="border: 4px solid #ccc;">{{$category->name}}</th>
+                                    <th style="border: 1px solid #ccc;">{{$category->name}}</th>
                                 @endforeach
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($hududs as $hudud)
                                 <tr>
-                                    <th style="border: 4px solid #ccc;">{{$hudud->name}}</th>
+                                    <th style="border: 1px solid #ccc;">{{$hudud->name}}</th>
                                     @foreach($categories as $category)
                                         <td style="padding: 10px; border: 1px solid #ddd; vertical-align: middle;">
                                             @if(isset($query) && isset($key))
@@ -121,6 +121,7 @@
                                                             $q->whereDate($query, now()->addDays($key));
                                                         })
                                                         ->where('category_id', $category->id)
+                                                        ->where('status', '!=', 4)
                                                         ->count();
                                                     @endphp
                                                 @elseif($key == 'expired')
@@ -130,6 +131,7 @@
                                                             $q->where($query, '<', date('Y-m-d'));
                                                         })
                                                         ->where('category_id', $category->id)
+                                                        ->where('status', '!=', 4)
                                                         ->count();
                                                     @endphp
                                                 @elseif($key == 'approved')

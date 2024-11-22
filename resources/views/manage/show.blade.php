@@ -60,7 +60,7 @@
                                             <td style="border: 1px solid #ccc;">{{$task->task->category->name}}</td>
                                             <td style="border: 1px solid #ccc;">{{$task->task->data}}</td>
                                             <td style="border: 1px solid #ddd; padding: 8px;">
-                                                @if($task->task->data < date('Y-m-d'))
+                                                @if($task->task->data < date('Y-m-d') && $task->status != 4)
                                                     <a href="#"
                                                        style="text-decoration: none; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 80px; height: 50px; border: 2px solid #ff0000; border-radius: 4px; color: #ff0000; cursor: not-allowed;pointer-events: none;"
                                                        target="_blank">
@@ -73,7 +73,7 @@
                                                             style="font-size: 12px; margin-top: 5px;">Muddati tugagan</span>
                                                     </a>
                                                 @endif
-                                                @if($task->task->data >= date('Y-m-d'))
+                                                @if($task->task->data >= date('Y-m-d') or $task->status == 4)
 
                                                     @if($task->status == 0)
                                                         <a href="#"
@@ -90,7 +90,7 @@
                                                                 style="font-size: 12px; margin-top: 5px;">Qaytarilgan</span>
                                                         </a>
                                                     @endif
-                                                    @if($task->status == 1 )
+                                                    @if($task->status == 1)
                                                         <a href="#"
                                                            style="text-decoration: none; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 80px; height: 50px; border: 2px solid #ffd700; border-radius: 4px; color: #ffd700; cursor: not-allowed;pointer-events: none;"
                                                            target="_blank">

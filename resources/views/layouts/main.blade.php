@@ -173,9 +173,11 @@
                                 <a href="{{ route('manage.index') }}"
                                    class="nav-link {{ request()->routeIs('manage.index') ? 'active' : '' }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-people-fill" viewBox="0 0 16 16">
+                                         class="bi bi-kanban" viewBox="0 0 16 16">
                                         <path
-                                            d="M13 7C14.1 7 15 6.1 15 5C15 3.9 14.1 3 13 3C11.9 3 11 3.9 11 5C11 6.1 11.9 7 13 7zM3 7C4.1 7 5 6.1 5 5C5 3.9 4.1 3 3 3C1.9 3 1 3.9 1 5C1 6.1 1.9 7 3 7zM3 8.5C1.956 8.5 0 9.214 0 10.5V12H6V10.5C6 9.214 4.044 8.5 3 8.5zM13 8.5C11.956 8.5 10 9.214 10 10.5V12H16V10.5C16 9.214 14.044 8.5 13 8.5z"/>
+                                            d="M13.5 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm-11-1a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                                        <path
+                                            d="M6.5 3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm-4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm8 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1z"/>
                                     </svg>
                                     <p>
                                         Manage
@@ -183,7 +185,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('task.index') }}" class="nav-link {{ request()->routeIs('task.index') ? 'active' : '' }}">
+                                <a href="{{ route('task.index') }}"
+                                   class="nav-link {{ request()->routeIs('task.index') ? 'active' : '' }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-list-task" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
@@ -199,7 +202,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('category.index') }}" class="nav-link {{ request()->routeIs('category.index') ? 'active' : '' }}">
+                                <a href="{{ route('category.index') }}"
+                                   class="nav-link {{ request()->routeIs('category.index') ? 'active' : '' }}">
                                     <i class="fas fa-layer-group"></i>
                                     <p>
                                         Category
@@ -207,11 +211,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('hudud.index') }}" class="nav-link {{ request()->routeIs('hudud.index') ? 'active' : '' }}">
+                                <a href="{{ route('hudud.index') }}"
+                                   class="nav-link {{ request()->routeIs('hudud.index') ? 'active' : '' }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-geo-fill" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                              d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.3 1.3 0 0 0-.37.265.3.3 0 0 0-.057.09V14l.002.008.016.033a.6.6 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.6.6 0 0 0 .146-.15l.015-.033L12 14v-.004a.3.3 0 0 0-.057-.09 1.3 1.3 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465s-2.462-.172-3.34-.465c-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411"/>
+                                         class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                        <path
+                                            d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+                                        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
                                     </svg>
                                     <p>
                                         Hudud
@@ -219,7 +225,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('user.index') }}" class="nav-link {{ request()->routeIs('user.index') ? 'active' : '' }}">
+                                <a href="{{ route('user.index') }}"
+                                   class="nav-link {{ request()->routeIs('user.index') ? 'active' : '' }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-person" viewBox="0 0 16 16">
                                         <path

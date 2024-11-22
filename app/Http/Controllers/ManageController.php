@@ -16,21 +16,20 @@ class ManageController extends Controller
         $count = TaskRegion::all()->count();
         $categories = Category::all();
         $hududlar = Hudud::all();
-        $twodays = TaskRegion::whereHas('task', function ($query) {
+        $twodays = TaskRegion::where('status', '!=', 4)->whereHas('task', function ($query) {
             $query->whereDate('data', now()->addDays(2));
         })->count();
-        $tomorrow = TaskRegion::whereHas('task', function ($query) {
+        $tomorrow = TaskRegion::where('status', '!=', 4)->whereHas('task', function ($query) {
             $query->whereDate('data', now()->addDays(1));
         })->count();
-        $today = TaskRegion::whereHas('task', function ($query) {
+        $today = TaskRegion::where('status', '!=', 4)->whereHas('task', function ($query) {
             $query->whereDate('data', now()->addDays(0));
         })->count();
         $confirm = TaskRegion::whereHas('task', function ($query) {
             $query->where('status', 4);
         })->count();
-        $reject = TaskRegion::whereHas('task', function ($query) {
-            $query->where('data', '<', date('Y-m-d'))
-            ->where('status', 1);
+        $reject = TaskRegion::where('status', '!=', 4)->whereHas('task', function ($query) {
+            $query->where('data', '<', date('Y-m-d'));
         })->count();
         return view('manage.index', ['hududs' => $hududlar, 'categories' => $categories, 'count' => $count, 'twodays' => $twodays, 'today' => $today, 'tomorrow' => $tomorrow, 'confirm' => $confirm, 'reject' => $reject]);
     }
@@ -40,45 +39,54 @@ class ManageController extends Controller
         $count = TaskRegion::all()->count();
         $categories = Category::all();
         $hududlar = Hudud::all();
-        $twodays = TaskRegion::whereHas('task', function ($query) {
+        $twodays = TaskRegion::where('status', '!=', 4)->whereHas('task', function ($query) {
             $query->whereDate('data', now()->addDays(2));
         })->count();
-        $tomorrow = TaskRegion::whereHas('task', function ($query) {
+        $tomorrow = TaskRegion::where('status', '!=', 4)->whereHas('task', function ($query) {
             $query->whereDate('data', now()->addDays(1));
         })->count();
-        $today = TaskRegion::whereHas('task', function ($query) {
+        $today = TaskRegion::where('status', '!=', 4)->whereHas('task', function ($query) {
             $query->whereDate('data', now()->addDays(0));
         })->count();
         $confirm = TaskRegion::whereHas('task', function ($query) {
             $query->where('status', 4);
         })->count();
-        $reject = TaskRegion::whereHas('task', function ($query) {
-            $query->where('data', '<', date('Y-m-d'))
-            ->where('status', 1);
+        $reject = TaskRegion::where('status', '!=', 4)->whereHas('task', function ($query) {
+            $query->where('data', '<', date('Y-m-d'));
         })->count();
         return view('manage.index', ['query' => $query, 'key' => $key, 'hududs' => $hududlar, 'categories' => $categories, 'count' => $count, 'twodays' => $twodays, 'today' => $today, 'tomorrow' => $tomorrow, 'confirm' => $confirm, 'reject' => $reject]);
     }
+
     public function show(Request $request)
     {
         $hududId = $request->input('hudud_id');
         $categoryId = $request->input('category_id');
         $key = $request->input('key');
 
-        $tasks = TaskRegion::where('hudud_id', $hududId)
+        $tasksQuery = TaskRegion::where('hudud_id', $hududId)
             ->where('category_id', $categoryId);
 
-        if ($key == 'expired') {
-            $tasks->whereHas('task', function ($q) {
-                $q->where('data', '<', now());
-            });
-        } elseif ($key == 'approved') {
-            $tasks->whereHas('task', function ($q) {
-                $q->where('status', '=', 4);
-            });
+        if ($key !== null) {
+            if (is_numeric($key)) {
+                $days = (int)$key;
+                $tasksQuery->whereHas('task', function ($query) use ($days) {
+                    $query->whereDate('data', now()->addDays($days));
+                });
+            } elseif ($key === 'expired') {
+                $tasksQuery->whereHas('task', function ($query) {
+                    $query->where('data', '<', now());
+                });
+            } elseif ($key === 'approved') {
+                $tasksQuery->whereHas('task', function ($query) {
+                    $query->where('status', '=', 4);
+                });
+            }
         }
 
-        $tasks = $tasks->get();
+        $tasks = $tasksQuery->get();
 
         return view('manage.show', compact('tasks'));
     }
+
+
 }
