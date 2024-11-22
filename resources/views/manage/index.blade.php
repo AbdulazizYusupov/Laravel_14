@@ -114,7 +114,6 @@
                                         <td style="padding: 10px; border: 1px solid #ddd; vertical-align: middle;">
                                             @if(isset($query) && isset($key))
                                                 @if($query == 'data' && $key !='expired')
-
                                                     @php
                                                         $key = (int)$key;
                                                         $taskCount = $hudud->HududTask()
@@ -202,7 +201,7 @@
                                                     </a>
                                                 @endif
                                             @endif
-                                            @if($taskCount > 0)
+                                            @if(!isset($key) and $taskCount > 0)
                                                 <a href="#">
                                                     <span style="display: inline-block; padding: 8px 15px;
                                                                         border-radius: 5px; background-color: #02c0c9;
