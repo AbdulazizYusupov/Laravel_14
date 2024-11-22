@@ -123,7 +123,6 @@
 
         <!-- Sidebar -->
         <div class="sidebar">
-            <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
                     <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
@@ -138,7 +137,8 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="{{ route('profile') }}" class="nav-link">
+                            <a href="{{ route('profile') }}"
+                               class="nav-link {{ request()->routeIs('profile') ? 'active' : '' }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-person-fill" viewBox="0 0 16 16">
                                     <path
@@ -151,7 +151,8 @@
                         </li>
                         @if(auth()->user()->role == 'user')
                             <li class="nav-item">
-                                <a href="{{ route('index') }}" class="nav-link">
+                                <a href="{{ route('index') }}"
+                                   class="nav-link {{ request()->routeIs('index') ? 'active' : '' }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-list-task" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
@@ -169,7 +170,20 @@
                         @endif
                         @if(auth()->user()->role == 'admin')
                             <li class="nav-item">
-                                <a href="{{ route('task.index') }}" class="nav-link">
+                                <a href="{{ route('manage.index') }}"
+                                   class="nav-link {{ request()->routeIs('manage.index') ? 'active' : '' }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-people-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M13 7C14.1 7 15 6.1 15 5C15 3.9 14.1 3 13 3C11.9 3 11 3.9 11 5C11 6.1 11.9 7 13 7zM3 7C4.1 7 5 6.1 5 5C5 3.9 4.1 3 3 3C1.9 3 1 3.9 1 5C1 6.1 1.9 7 3 7zM3 8.5C1.956 8.5 0 9.214 0 10.5V12H6V10.5C6 9.214 4.044 8.5 3 8.5zM13 8.5C11.956 8.5 10 9.214 10 10.5V12H16V10.5C16 9.214 14.044 8.5 13 8.5z"/>
+                                    </svg>
+                                    <p>
+                                        Manage
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('task.index') }}" class="nav-link {{ request()->routeIs('task.index') ? 'active' : '' }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-list-task" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
@@ -185,7 +199,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('category.index') }}" class="nav-link">
+                                <a href="{{ route('category.index') }}" class="nav-link {{ request()->routeIs('category.index') ? 'active' : '' }}">
                                     <i class="fas fa-layer-group"></i>
                                     <p>
                                         Category
@@ -193,7 +207,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('hudud.index') }}" class="nav-link">
+                                <a href="{{ route('hudud.index') }}" class="nav-link {{ request()->routeIs('hudud.index') ? 'active' : '' }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-geo-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
@@ -205,7 +219,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('user.index') }}" class="nav-link">
+                                <a href="{{ route('user.index') }}" class="nav-link {{ request()->routeIs('user.index') ? 'active' : '' }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-person" viewBox="0 0 16 16">
                                         <path

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ManageController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
@@ -31,6 +32,9 @@ Route::middleware('auth')->group(function(){
 });
 
 Route::middleware('check')->group(function(){
+
+    Route::get('/manage-index',[ManageController::class,'index'])->name('manage.index');
+    Route::get('/manage-filter/{query}/{key}',[ManageController::class,'filter'])->name('manage.filter');
 
     Route::get('/category-index',[CategoryController::class,'index'])->name('category.index');
     Route::post('/category-store',[CategoryController::class,'store'])->name('category.store');

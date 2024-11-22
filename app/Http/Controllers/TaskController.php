@@ -103,6 +103,7 @@ class TaskController extends Controller
         foreach ($request->hududs as $hudud) {
             $task->HududTask()->create([
                 'hudud_id' => $hudud,
+                'category_id' => $task->category_id,
                 'status' => '1'
             ]);
         }

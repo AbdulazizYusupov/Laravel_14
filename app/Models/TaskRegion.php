@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TaskRegion extends Model
 {
     protected $fillable = [
-        'task_id', 'hudud_id', 'status'
+        'task_id', 'hudud_id', 'category_id', 'status'
     ];
 
     public function task()
@@ -17,5 +17,9 @@ class TaskRegion extends Model
     public function hudud()
     {
         return $this->belongsTo(Hudud::class,'hudud_id');
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class,'category_id');
     }
 }
