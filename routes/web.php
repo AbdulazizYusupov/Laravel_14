@@ -37,6 +37,11 @@ Route::middleware('check')->group(function(){
     Route::get('/manage-filter/{query}/{key}',[ManageController::class,'filter'])->name('manage.filter');
     Route::get('/manage-show',[ManageController::class,'show'])->name('manage.show');
 
+    Route::get('/info',[ManageController::class,'info'])->name('info');
+    Route::post('/info-filter',[ManageController::class,'infoFilter'])->name('info.filter');
+
+    Route::get('/report-index',[ManageController::class,'report'])->name('report.index');
+
     Route::get('/category-index',[CategoryController::class,'index'])->name('category.index');
     Route::post('/category-store',[CategoryController::class,'store'])->name('category.store');
     Route::put('/category-update{id}',[CategoryController::class,'update'])->name('category.update');

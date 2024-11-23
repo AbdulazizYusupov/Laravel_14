@@ -88,5 +88,29 @@ class ManageController extends Controller
         return view('manage.show', compact('tasks'));
     }
 
+    public function info()
+    {
+        $categories = Category::all();
+        return view('manage.info', ['categories' => $categories]);
+    }
 
+    public function infoFilter(Request $request)
+    {
+        $start = $request->start_date;
+        $end = $request->end_date;
+
+        $categories = Category::with(['HududTask' => function ($query) use ($start, $end) {
+            $query->whereHas('task', function ($query) use ($start, $end) {
+                $query->whereBetween('data', [$start, $end]);
+            });
+        }])->get();
+
+        return view('manage.info', ['categories' => $categories]);
+    }
+    public function report()
+    {
+        $categories = Category::all();
+        $hududs = Hudud::all();
+        return view('manage.report',['categories'=>$categories,'hududs'=>$hududs]);
+    }
 }
