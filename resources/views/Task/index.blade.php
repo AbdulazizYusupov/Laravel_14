@@ -94,12 +94,14 @@
                         <div class="small-box bg-danger">
                             <div class="inner">
                                 <h3>{{$reject}}</h3>
-                                <p>Qaytarilganlar</p>
+                                <p>Muddati buzulganlar</p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-pie-graph"></i>
+                                <i class="ion-close-circled"></i>
                             </div>
-                            <a href="{{route('task.data', 5)}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{route('task.data',5)}}" class="small-box-footer">More info
+                                <i
+                                    class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -255,7 +257,8 @@
                                                                     <i class="fas fa-download"></i> Download
                                                                 </a>
                                                             @else
-                                                                <span class="text-muted float-left">No file available</span>
+                                                                <span
+                                                                    class="text-muted float-left">No file available</span>
                                                             @endif<br><br>
                                                             <form
                                                                 action="{{ route('izoh', $model->task->javob->first()->id) }}"

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Login;
+use App\Http\Requests\UserStore;
+use App\Http\Requests\UserUpdate;
 use App\Jobs\SendEmail;
 use App\Models\Category;
 use App\Models\User;
@@ -16,15 +19,12 @@ class AuthController extends Controller
         return view('Auth.login');
     }
 
-    public function login(Request $request)
+    public function login(Login $request)
     {
-        $data = $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required', 'string', 'min:6'],
-        ]);
+        $data = $request->validated();
         if (auth()->attempt($data)) {
             if (auth()->user()->role == 'admin') {
-                return redirect(route('task.index'));
+                return redirect(route('manage.index'));
             }else{
                 return redirect(route('index'));
             }
@@ -64,32 +64,26 @@ class AuthController extends Controller
         return view('Auth.index', ['models' => $models]);
     }
 
-    public function store(Request $request)
+    public function store(UserStore $request)
     {
-        $data = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-        ]);
+        $data = $request->validated();
 
-        User::create($data);
+        User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
 
         return redirect()->route('user.index');
     }
 
-    public function update(Request $request, User $user)
+    public function update(UserUpdate $request, User $user)
     {
+        $data = $request->validated();
 
-        //dd($user);
-        $data = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'required|min:6',
-        ]);
-        //dd($user);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = Hash::make($data['password']);
         $user->save();
         return redirect()->route('user.index');
     }
@@ -106,19 +100,15 @@ class AuthController extends Controller
         $user = auth()->user();
         return view('Auth.profile', ['user' => $user]);
     }
-    public function updateProfile(Request $request, User $user)
+    public function updateProfile(UserUpdate $request, User $user)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:6',
-        ]);
+        $data = $request->validated();
 
-        $user->name = $request->name;
-        $user->email = $request->email;
+        $user->name = $data['name'];
+        $user->email = $data['email'];
 
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->password);
+        if ($data->filled('password')) {
+            $user->password = Hash::make($data['password']);
         }
 
         $user->save();

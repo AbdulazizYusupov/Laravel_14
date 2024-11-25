@@ -35,7 +35,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-striped table-bordered text-center">
+                        <table class="table table-striped table-bordered">
                             <thead>
                             <tr>
                                 <th>ID</th>

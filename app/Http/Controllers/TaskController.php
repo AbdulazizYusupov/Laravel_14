@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskStore;
+use App\Http\Requests\TaskUpdate;
 use App\Models\Category;
 use App\Models\Hudud;
 use App\Models\Task;
@@ -27,8 +29,8 @@ class TaskController extends Controller
         $confirm = TaskRegion::whereHas('task', function ($query) {
             $query->where('status', 4);
         })->count();
-        $reject = TaskRegion::whereHas('task', function ($query) {
-            $query->where('status', 0);
+        $reject = TaskRegion::where('status', '!=', 4)->whereHas('task', function ($query) {
+            $query->where('data', '<', date('Y-m-d'));
         })->count();
         return view('Task.index', ['models' => $models, 'count' => $count,'twodays' => $twodays,'today' => $today, 'tomorrow' => $tomorrow,'confirm' => $confirm,'reject' => $reject]);
     }
@@ -47,8 +49,8 @@ class TaskController extends Controller
         $confirm = TaskRegion::whereHas('task', function ($query) {
             $query->where('status', 4);
         })->count();
-        $reject = TaskRegion::whereHas('task', function ($query) {
-            $query->where('status', 0);
+        $reject = TaskRegion::where('status', '!=', 4)->whereHas('task', function ($query) {
+            $query->where('data', '<', date('Y-m-d'));
         })->count();
         if ($key == 1) {
             $models = TaskRegion::whereHas('task', function ($query) {
@@ -67,8 +69,8 @@ class TaskController extends Controller
                 $query->where('status' , 4);
             })->orderBy('id', 'desc')->paginate(10);
         }elseif ($key == 5){
-            $models = TaskRegion::whereHas('task', function ($query) {
-                $query->where('status' , 0);
+            $models = TaskRegion::where('status', '!=', 4)->whereHas('task', function ($query) {
+                $query->where('data', '<', date('Y-m-d'));
             })->orderBy('id', 'desc')->paginate(10);
         }
         return view('Task.index', ['models' => $models,'count' => $count,'twodays' => $twodays,'today' => $today, 'tomorrow' => $tomorrow,'confirm' => $confirm,'reject' => $reject]);
@@ -79,17 +81,10 @@ class TaskController extends Controller
         $categories = Category::all();
         return view('Task.create', ['categories' => $categories, 'hududs' => $hududs]);
     }
-    public function store(Request $request)
+    public function store(TaskStore $request)
     {
-        $data = $request->validate([
-            'name' => 'required|max:255',
-            'title' => 'required|max:255',
-            'file' => 'nullable|file|mimes:jpeg,png,jpg,svg,pdf,docx,xls,xlsx|max:4096',
-            'category_id' => 'required',
-            'data' => 'required|date',
-            'hududs' => 'required|array',
-            'hududs.*' => 'exists:hududs,id',
-        ]);
+        $data = $request->validated();
+
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $extension = $file->getClientOriginalExtension();
@@ -116,17 +111,10 @@ class TaskController extends Controller
         return view('Task.edit', ['model' => $task, 'categories' => $categories, 'hududs' => $hududs]);
     }
 
-    public function update(Request $request, $id)
+    public function update(TaskUpdate $request, $id)
     {
-        $data = $request->validate([
-            'name' => 'required|max:255',
-            'title' => 'required|max:255',
-            'file' => 'nullable|file|mimes:jpeg,png,jpg,svg,pdf,docx,xls,xlsx|max:4096',
-            'category_id' => 'required',
-            'data' => 'required|date',
-            'hududs' => 'required|array',
-            'hududs.*' => 'exists:hududs,id',
-        ]);
+        $data = $request->validated();
+
         $task = Task::findOrFail($id);
 
         if ($request->hasFile('file')) {
@@ -184,8 +172,8 @@ class TaskController extends Controller
         $confirm = TaskRegion::whereHas('task', function ($query) {
             $query->where('status', 4);
         })->count();
-        $reject = TaskRegion::whereHas('task', function ($query) {
-            $query->where('status', 0);
+        $reject = TaskRegion::where('status', '!=', 4)->whereHas('task', function ($query) {
+            $query->where('data', '<', date('Y-m-d'));
         })->count();
         return view('Task.index', ['models' => $models, 'count' => $count, 'twodays' => $twodays, 'today' => $today, 'tomorrow' => $tomorrow, 'confirm' => $confirm, 'reject' => $reject]);
     }

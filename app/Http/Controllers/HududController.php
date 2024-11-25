@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\HududStore;
+use App\Http\Requests\HududUpdate;
 use App\Models\Hudud;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,26 +18,24 @@ class HududController extends Controller
         return view('hudud.index', ["models" => $models,'users' => $users]);
     }
 
-    public function store(Request $request)
+    public function store(HududStore $request)
     {
-        $data = $request->validate([
-            'name' => 'required|max:255',
-            'user_id' => 'required',
-        ]);
+        $validated = $request->validated();
 
-        Hudud::create($data);
+        Hudud::create([
+            'name' => $validated['name'],
+        ]);
 
         return redirect()->route('hudud.index');
     }
 
-    public function update(Request $request, Hudud $hudud, int $id)
+    public function update(HududUpdate $request, Hudud $hudud, int $id)
     {
-        $data = $request->validate([
-            'name' => 'required|max:255',
-            'user_id' => 'required',
-        ]);
+        $validated = $request->validated();
 
-        $hudud->where('id', $id)->update($data);
+        $hudud->where('id', $id)->update([
+            'name' => $validated['name'],
+        ]);
 
         return redirect()->route('hudud.index');
     }
